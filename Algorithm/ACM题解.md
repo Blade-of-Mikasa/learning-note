@@ -43,7 +43,40 @@ signed main(){
 }
 ```
 
-排序算法
+
+
+简化
+
+```c++
+//1 MB == 1e6 int
+#include <bits/stdc++.h>
+#define int long long
+//#define double long double
+#define ISO  {std::ios::sync_with_stdio(false);cin.tie(0); cout.tie(0);} //关流
+#define Clear(a) {memset(a, 0, sizeof(a));}
+using namespace std; //上面的都别动
+const int INF = 0x3f3f3f3f3f3f3f3f;
+const int inf = 0x3f3f3f3f;
+const int MAXN = 1e6 + 10;
+const int maxn = 2e5 + 10;
+//#define endl '/n' //注意该宏也作用于check（无法刷新输出缓存区
+
+void solve(){
+}
+
+signed main(){
+    ISO;
+    int t = 1;
+    //cin>>t;
+    while(t--)
+        solve();
+    return 0;
+}
+```
+
+
+
+#### 排序
 
 **Quick Sort（快速排序）**
 
@@ -143,6 +176,8 @@ while (r - l > eps)
 }
 //return l;
 ```
+
+
 
 #### 三分
 
@@ -264,6 +299,8 @@ vector<int> div(vector<int> &A, int b, int &r)
     return C;
 }
 ```
+
+
 
 **封装的 big_int 类**
 
@@ -604,6 +641,12 @@ void solve(){
 
 #### 位运算
 
+`^` 异或	`p ^ p = 0`
+
+`&` 和	
+
+`|` 或
+
 `lowbit(i)` or `i & -i`	返回 i 的最后一位 1
 
 `n >> k & 1`	求 n 的第 k 位数字
@@ -629,12 +672,9 @@ for(int i = 1, j = 0; i <= n; ++ i)
     while(j < n && !check(now))
     {
         ++ j;
-        //deal j
+        //...    
     }
-    
-    //if(...)
-    //update ans
-
+    //...
     //deal i
 }
 ```
@@ -1275,6 +1315,16 @@ long long fp (long long a, long long b, long long p) {
 }
 ```
 
+
+
+#### 矩阵快速幂
+
+```
+
+```
+
+
+
 #### EXGCD（拓展欧几里得算法）
 
 求解二元一次不定方程 ax + by = (a, b)
@@ -1299,7 +1349,7 @@ int exgcd(int a, int b ,int &x ,int &y)
 
 ### 4.2 数论 & 组合数学
 
-##### 质数判断
+#### 质数
 
 判断单个素数 $O(\sqrt{n})$
 
@@ -1337,6 +1387,20 @@ for(int i = 2; i <= MAXN; ++ i)
     }    
 }
 ```
+
+
+
+#### 斐波那契
+
+**皮萨诺周期**
+
+模 $m$ 意义下斐波那契数列的周期被称为皮萨诺周期, 记为 $P(m)$.
+
+有结论: $P(m) \leq 6m, 当且仅当m = 2\times 5^k时等号成立$. 
+
+
+
+
 
 ### 4.3 博弈论
 
@@ -1787,36 +1851,15 @@ n 个点，m 条边，点 u 的入度 $d^-(u)$，出度$d^+(u)$。
 
 使用一个支持动态增加元素的数据结构构成的数组，如 
 
-`vector<int> adj[MAXN];`
+`vector<int> e[MAXN];`
 
-`adj [u]`存的是点 u 的所有出边信息（终点、边权等）
-
-```c++
-// 对于每个点k，开一个单链表，存储k所有可以走到的点。
-//h[k]存储这个单链表的头结点; e[k]存储结点的值; ne[k]存储结点的 next 
-int h[N], e[N], ne[N], idx;
-
-// 添加一条边a->b
-void add(int a, int b)
-{
-    e[idx] = b, ne[idx] = h[a], h[a] = idx ++ ;
-}
-
-// 初始化
-idx = 0;
-memset(h, -1, sizeof h);
-```
-
-
+`e [u]`存的是点 u 的所有出边信息（终点、边权等）
 
 ```c++
 struct edge{
     int from, to, w;
-    edge(int a, int b, int c){
-        from = a;
-        to = b;
-        w = c;
-    }
+    edge(int a, int b, int c = 1)
+    {from = a, to = b, w = c;}
 };
 
 vector<edge> e[maxn];
@@ -2448,6 +2491,8 @@ signed main(){
 
 ​	以上两种方法都需要遍历所有的边和点，复杂度均为$O(n+m)$。若要输出所有的排序，使用  DFS；若只输出一个排序（一般是字典序最小的排序），则使用 BFS。
 
+
+
 ## 8. 杂项
 
 #### 定积分
@@ -2491,6 +2536,8 @@ double calculus(double l, double r, double eps) {
 
 看上去本质上没有改变，但时间复杂度降低至 $O(nlogn)$. 因为对于每个元素，每次合并一定是从小的集合合并到大的集合，所以合并后的集合大小一定翻倍，那么一个元素最多移动 logn 次，总的时间复杂度为 $O(nlogn)$
 
+
+
 [E - K-th Largest Connected Components (atcoder.jp)](https://atcoder.jp/contests/abc372/tasks/abc372_e?lang=en)
 $$
 维护连通块首选并查集, 每个点开一个set记录联通点\\
@@ -2498,9 +2545,9 @@ $$
 $$
 优化:
 $$
-set合并需要遍历整个集合,可能会造成重复插入, 最坏情况下时间复杂度为O(n^{2}logn + qlogn)\\
+set合并需要遍历整个集合,可能会造成重复插入, 最坏情况下时间复杂度为O((n^{2} + q)logn)\\
 使用按大小合并, 每次合并都把小集合插入到大集合\\
-每次合并集合大小至少翻倍, 每个元素最多合并logn次,时间复杂度O(nlogn + qlogn)
+每次合并集合大小至少翻倍, 故每个元素最多合并logn次,时间复杂度O((n + q)logn)
 $$
 
 
@@ -2584,11 +2631,88 @@ signed main(){
 
 ```
 
-### 
 
 
 
 
+#### 异或哈希
+
+利用异或的性质和哈希降低冲突的原理，可以快速找到一个组合是否出现
+
+[Problem - F - Codeforces](https://codeforces.com/contest/1175/problem/F)
+$$
+异或hash + 双指针思想\\
+遍历所有a[i] = 1的位置, 每次从i的两头开始\\
+遍历r, 直到a[r]在[i,r - 1]中出现过\\
+遍历l, 直到a[l]在[l + 1,i]中出现过或a[l]\geq max_{[i + 1, r]}(a[])\\
+若b[l] \oplus ...b[r] = f(r - l + 1), ans + 1\\
+然后倒序来一次, 再注意单独的1\\
+$$
+
+
+
+```c++
+std::mt19937_64 rnd(time(0));
+using hash = uint64_t;
+
+void solve()
+{
+    int n; std::cin >> n;
+    std::vector<int> a(n); for (auto& x : a) {std::cin >> x;}
+    std::vector<hash> code(n + 1), pre_chk(n + 1), pre_xor(n + 1);
+    // code:(a[i] -> uint64)， pre_chk : 1 ~ n 的 前缀异或和， pre_xor : a[i] 的 前缀异或和
+    for (int i = 1; i <= n; i++) 
+    {
+        code[i] = rnd();
+        pre_chk[i] = pre_chk[i - 1] ^ code[i];
+    }
+    for (int i = 1; i <= n; i++) {pre_xor[i] = pre_xor[i - 1] ^ code[a[i]];}
+
+    std::map<int, int> cnt; cnt[0] = 1;
+
+    int res{}; for (int l = 1; l <= n; l++) 
+    {
+        for (int r = l; r <= n; r++) 
+        {
+            if (pre_xor[r] ^ pre_xor[l - 1] == pre_chk[r - l + 1]) {
+                res += 1;
+            }
+        }
+    }
+}
+
+int ans{}, one{};//特殊记录长度为1的个数，因为会统计两边
+
+auto calc = [&](auto a) {//正反跑一遍，处理两个方向的方案数
+    std::vector<hash> pre_xor(n + 1);//a[i] 的 前缀异或和和
+    for (int i = 0; i < n; i++) {pre_xor[i + 1] = pre_xor[i] ^ code[a[i]];}
+    
+    int lst_one{-1}, mx = 0; 
+    for (int r = 0; r < n; r++) 
+    {
+        if (a[r] == 1) 
+        {
+            //进行新一段的处理
+            one += 1; 
+            lst_one = r; mx = 1;    
+        } 
+        else if (lst_one != -1) 
+        {
+            mx = std::max(mx, a[r]);
+            if (mx >= (r - lst_one + 1)) 
+            {
+                //如果当前最大值大于等于当前段长度，则可以操作
+                int l{lst_one - (mx - (r - lst_one + 1))};//找到符合当前最大值长度的段的左端点
+                if (l >= 0) {ans += ((pre_xor[r + 1] ^ pre_xor[l]) == pre_chk[mx]);}
+            }
+        }
+    }
+
+};
+calc(decltype(a)(a.begin(), a.end())); calc(decltype(a)(a.rbegin(), a.rend()));
+
+std::cout << ans + one / 2 << '\n';
+```
 
 
 
